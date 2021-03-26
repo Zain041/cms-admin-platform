@@ -1,4 +1,4 @@
-import { DAILY_INCOME , FETCH_POST , DELETE_POST , UPDATE_POST} from '../actions/type'
+import { DAILY_INCOME , FETCH_POST , DELETE_POST ,FETCH_ABOUT, UPDATE_POST, FETCH_JOBS, FETCH_REMOTE} from '../actions/type'
 
 import {db} from '../firebase'
 
@@ -6,6 +6,9 @@ const posts =  db.collection('posts')
 
 const initialState = {
 	posts:[],
+	jobs:[],
+	hirings:[],
+	about:[]
 	
 	}
     
@@ -21,14 +24,31 @@ function reducer(state = initialState, action) {
             
 	
         case FETCH_POST: {
-		   const data = [];
-		   console.log(data);
-			action.payload.docs.forEach(doc => {
-				data.push({...doc.data(),id:doc.id});
-			});
+		  
 			return {
 				...state,
-				posts: data,
+				posts: action.payload,
+			};
+		}
+		case FETCH_REMOTE: {
+		  
+			return {
+				...state,
+				hirings: action.payload,
+			};
+		}
+		case FETCH_JOBS: {
+		  
+			return {
+				...state,
+				jobs: action.payload,
+			};
+		}
+		case FETCH_ABOUT: {
+		  
+			return {
+				...state,
+				about: action.payload,
 			};
 		}
 				   
